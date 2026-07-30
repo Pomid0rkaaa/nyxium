@@ -18,6 +18,12 @@ export class Lexer {
 		}
 		while (!this.isEnd()) {
 			const ch = this.peek();
+            if (ch === "#") {
+				while (!this.isEnd() && this.peek() !== "\n") {
+					this.advance();
+				}
+				continue;
+			}
 			if (this.isWhitespace(ch)) {
 				this.advance();
 				continue;

@@ -38,3 +38,11 @@ test("handles Windows CRLF line endings", () => {
 	const lexer = new Lexer(source);
 	assert.doesNotThrow(() => lexer.scan());
 });
+
+test("ignores comments after # until the end of the line", () => {
+	const source = "x. # comment\nx.";
+	const lexer = new Lexer(source);
+	const tokens = lexer.scan();
+	const parser = new Parser(tokens);
+	assert.doesNotThrow(() => parser.parse());
+});
