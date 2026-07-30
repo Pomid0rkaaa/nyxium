@@ -1,31 +1,27 @@
 {
   "name": "nyxium",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nyxium programming language",
   "main": "dist/index.js",
   "type": "module",
+  "bin": {
+    "nyxium": "./dist/index.js"
+  },
   "scripts": {
-    "dev": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist",
     "build:single": "node ./scripts/build-single.mjs",
     "build:min": "node ./scripts/build-single.mjs --minify",
-    "build:web": "node scripts/build-web.mjs --minify",
+    "build:web": "node ./scripts/build-web.mjs --minify",
     "start": "node dist/index.js",
     "test": "node --import tsx --test tests/**/*.test.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Pomid0rkaaa/nyxium.git"
-  },
-  "author": "imtlx",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Pomid0rkaaa/nyxium/issues"
-  },
-  "homepage": "https://github.com/Pomid0rkaaa/nyxium#readme",
   "devDependencies": {
     "@types/node": "^26.1.2",
     "esbuild": "^0.28.1",
+    "rimraf": "^6.0.1",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   }
