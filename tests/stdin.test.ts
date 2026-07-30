@@ -46,3 +46,16 @@ test("ignores comments after # until the end of the line", () => {
 	const parser = new Parser(tokens);
 	assert.doesNotThrow(() => parser.parse());
 });
+
+test("parses comparison conditions with the correct operator and right-hand register", () => {
+	const source = "x& y& x>y(x.|y.)";
+	const lexer = new Lexer(source);
+	const tokens = lexer.scan();
+	const parser = new Parser(tokens);
+	const program = parser.parse();
+
+	assert.equal(program.statements.length, 3);
+	assert.equal(program.statements[2].type, "Condition");
+	assert.equal((program.statements[2] as any).operator, ">" );
+	assert.equal((program.statements[2] as any).right, "y");
+});

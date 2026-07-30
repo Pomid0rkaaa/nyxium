@@ -13,10 +13,9 @@ export class Lexer {
 
 	scan(): Token[] {
 		const tokens: Token[] = [];
-		while (this.pending.length > 0) {
-			tokens.push(this.pending.shift()!);
-		}
+		this.flushPending(tokens);
 		while (!this.isEnd()) {
+			this.flushPending(tokens);
 			const ch = this.peek();
             if (ch === "#") {
 				while (!this.isEnd() && this.peek() !== "\n") {
@@ -94,8 +93,15 @@ export class Lexer {
 					throw this.error(`unknown character '${ch}'`);
 			}
 		}
+		this.flushPending(tokens);
 		tokens.push(this.makeToken(TokenKind.EOF, ""));
 		return tokens;
+	}
+
+	private flushPending(tokens: Token[]): void {
+		while (this.pending.length > 0) {
+			tokens.push(this.pending.shift()!);
+		}
 	}
 
 	private scanVariable(line: number, column: number): Token {
