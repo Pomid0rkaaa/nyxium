@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "build:single": "node ./scripts/build-single.mjs",
+    "build:min": "node ./scripts/build-single.mjs --minify",
+    "start": "node dist/index.js",
+    "test": "node --import tsx --test tests/**/*.test.ts"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   "homepage": "https://github.com/Pomid0rkaaa/nyxium#readme",
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "esbuild": "^0.28.1",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   }
