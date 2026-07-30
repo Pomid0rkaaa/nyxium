@@ -239,7 +239,7 @@ export class Lexer {
 	private isVariableOperation = (ch: string): boolean =>
 		".:?&!^$".includes(ch);
 	private isWhitespace = (ch: string): boolean =>
-		ch === " " || ch === "\n" || ch === "\t";
+		ch === " " || ch === "\n" || ch === "\r" || ch === "\t";
 	private isVariable = (ch: string): boolean => this.variables.has(ch);
 	private peek = (): string => this.source[this.current] ?? "";
 	private isEnd = (): boolean => this.current >= this.source.length;

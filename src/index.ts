@@ -1,7 +1,7 @@
-import { promises as fs } from "node:fs";
 import { Lexer } from "./core/lexer/lexer.js";
 import { Parser } from "./core/parser/parser.js";
 import { Interpreter } from "./core/interpreter/interpreter.js";
+import { readFileSource } from "./cli-source.js";
 
 const defaultSource = `
 x+++++
@@ -30,6 +30,13 @@ async function readInteractiveInput(prompt = "stdin> "): Promise<string> {
 	return Buffer.concat(chunks).toString("utf8").trim();
 }
 
+async function resolveStdin(): Promise<string> {
+	if (process.stdin.isTTY) {
+		return "";
+	}
+	return await readStdin();
+}
+
 async function resolveSource(args: string[]): Promise<{ source: string; stdin: string }> {
 	const codeIndex = args.findIndex((arg) => arg === "-c" || arg === "--code");
 	if (codeIndex >= 0) {
@@ -37,23 +44,23 @@ async function resolveSource(args: string[]): Promise<{ source: string; stdin: s
 		const stdinArg = args[codeIndex + 2];
 		return {
 			source: code || defaultSource,
-			stdin: stdinArg ?? (process.stdin.isTTY ? await readInteractiveInput() : await readStdin()),
+			stdin: stdinArg ?? (await resolveStdin()),
 		};
 	}
 
 	const filePath = args[0] ?? "";
 	if (filePath) {
-		const source = await fs.readFile(filePath, "utf8");
+		const source = await readFileSource(filePath);
 		const stdinArg = args[1];
 		return {
 			source,
-			stdin: stdinArg ?? (process.stdin.isTTY ? await readInteractiveInput() : await readStdin()),
+			stdin: stdinArg ?? (await resolveStdin()),
 		};
 	}
 
 	return {
 		source: defaultSource,
-		stdin: process.stdin.isTTY ? await readInteractiveInput() : await readStdin(),
+		stdin: await resolveStdin(),
 	};
 }
 
