@@ -16,20 +16,6 @@ async function readStdin(): Promise<string> {
 	return Buffer.concat(chunks).toString("utf8").trim();
 }
 
-async function readInteractiveInput(prompt = "stdin> "): Promise<string> {
-	process.stdout.write(prompt);
-	const chunks: Buffer[] = [];
-	for await (const chunk of process.stdin) {
-		const text = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
-		if (text.includes("\n") || text.includes("\r")) {
-			chunks.push(text);
-			break;
-		}
-		chunks.push(text);
-	}
-	return Buffer.concat(chunks).toString("utf8").trim();
-}
-
 async function resolveStdin(): Promise<string> {
 	if (process.stdin.isTTY) {
 		return "";
