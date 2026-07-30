@@ -1,0 +1,18 @@
+x++++++  # x = 6
+y++++++++++  # y = 10
+xy[*!]  # x = x * y = 60
+x+++++  # x = 65 or A:
+
+z+++++++++  # z = 9
+yz[*!]  # y = y * z = 90
+
+yx[-?]  # y - x = 90 - 65 = 25, push to mem
+
+z! z+  # z = 26
+
+# do ... while z != 0
+z{
+  x:  # output char code of x
+  x+  # x += 1 to get next char
+  z-  # decrement z
+}

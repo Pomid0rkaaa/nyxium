@@ -1,0 +1,11 @@
+a&  # get input for a
+x+++++  # x = 5
+
+# if a = 5
+x=a(
+  # then
+  z+  # z += 1
+  # else we doing nothing, z = 0 by default
+)
+
+z.  # output value of z

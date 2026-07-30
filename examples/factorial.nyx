@@ -1,0 +1,12 @@
+x&  # get input for x
+
+y+  # y = 1, default answer
+
+# do ... while x != 0
+x{
+  yx[*!]  # y = y * x
+  y? z!  # copying value from y to z
+  x-  # decrementing x
+}
+
+z.  # output factorial of the input number

@@ -1,0 +1,14 @@
+x& y&  # get input for x and y
+
+a+++++++  # a = 7
+b++++++  # b = 6
+ab[*!]  # a * b = 42, push to mem
+a+  # a = 43
+
+# if x != y
+#   then a = -:
+#   else a = +:
+x^y( a++ )
+
+# output char code of a
+a:

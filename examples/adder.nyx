@@ -1,0 +1,2 @@
+x& y&  # get input for x and y
+xy[+.]  # output x + y
