@@ -34,9 +34,9 @@ Registers start at `0`.
 | Syntax | Meaning |
 | --- | --- |
 | `x+` | Increment register `x` by 1 |
-| `x++` | Increment register `x` by 2 |
+| `x++++` | Increment register `x` by 4 |
 | `x-` | Decrement register `x` by 1 |
-| `x--` | Decrement register `x` by 2 |
+| `x------` | Decrement register `x` by 6 |
 | `x.` | Print the current value of `x` as a number |
 | `x:` | Print the current value of `x` as a character |
 | `x?` | Push the value of `x` onto the stack |
