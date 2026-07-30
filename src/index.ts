@@ -3,10 +3,18 @@ import { Parser } from "./core/parser/parser.js";
 import { Interpreter } from "./core/interpreter/interpreter.js";
 import { readFileSource } from "./cli-source.js";
 
-const defaultSource = `
-x+++++
-x.
-`;
+function printHelp(): void {
+	console.log(`Usage: nyxium [options] [file]
+
+Options:
+  -c, --code <code>  Execute inline code
+  -h, --help         Show this help message
+
+Examples:
+  nyxium script.nyx
+  nyxium -c "x."
+  printf '42' | nyxium script.nyx`);
+}
 
 async function readStdin(): Promise<string> {
 	const chunks: Buffer[] = [];
@@ -23,13 +31,18 @@ async function resolveStdin(): Promise<string> {
 	return await readStdin();
 }
 
-async function resolveSource(args: string[]): Promise<{ source: string; stdin: string }> {
+async function resolveSource(args: string[]): Promise<{ source: string; stdin: string } | null> {
+	if (args.includes("-h") || args.includes("--help")) {
+		printHelp();
+		return null;
+	}
+
 	const codeIndex = args.findIndex((arg) => arg === "-c" || arg === "--code");
 	if (codeIndex >= 0) {
 		const code = args[codeIndex + 1] ?? "";
 		const stdinArg = args[codeIndex + 2];
 		return {
-			source: code || defaultSource,
+			source: code,
 			stdin: stdinArg ?? (await resolveStdin()),
 		};
 	}
@@ -44,16 +57,18 @@ async function resolveSource(args: string[]): Promise<{ source: string; stdin: s
 		};
 	}
 
-	return {
-		source: defaultSource,
-		stdin: await resolveStdin(),
-	};
+	printHelp();
+	return null;
 }
 
 async function main() {
 	const args = process.argv.slice(2);
-	const { source, stdin } = await resolveSource(args);
+	const resolved = await resolveSource(args);
+	if (!resolved) {
+		return;
+	}
 
+	const { source, stdin } = resolved;
 	const lexer = new Lexer(source);
 	const tokens = lexer.scan();
 
