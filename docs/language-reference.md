@@ -51,15 +51,15 @@ Arithmetic instructions use two registers and an operator:
 
 | Syntax | Meaning |
 | --- | --- |
-| `xy+.` | Print `x + y` |
-| `xy-.` | Print `x - y` |
-| `xy*.` | Print `x * y` |
-| `xy/.` | Print `x / y` (integer division) |
+| `xy[+.]` | Print `x + y` |
+| `xy[-.]` | Print `x - y` |
+| `xy[*.]` | Print `x * y` |
+| `xy[/.]` | Print `x / y` (integer division) |
 
 The pattern is:
 
 ```text
-<left><right><operator><action>
+<left><right>[<operator><action>]
 ```
 
 Supported actions:
