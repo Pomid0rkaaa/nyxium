@@ -1,7 +1,7 @@
 import { Lexer } from "../core/lexer/lexer.js";
 import { Parser } from "../core/parser/parser.js";
 import { Interpreter } from "../core/interpreter/interpreter.js";
-import { resolveSource } from "./args.js";
+import { resolveSource } from "./source.js";
 
 export async function run(argv: string[]): Promise<void> {
 	try {
