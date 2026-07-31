@@ -37,7 +37,8 @@ export class Parser {
 	}
 
 	private variableOperation(): Statement {
-		const lexeme = this.advance().lexeme;
+		const token = this.advance();
+		const lexeme = token.lexeme;
 		const register = lexeme[0];
 		const operation = lexeme[1];
 		switch (operation) {
@@ -98,12 +99,16 @@ export class Parser {
 					register,
 				};
 			default:
-				throw this.error(`Unknown variable operation '${lexeme}'`);
+				throw this.error(
+					`Unknown variable operation '${lexeme}'`,
+					token,
+				);
 		}
 	}
 
 	private arithmetic(): Statement {
-		const lexeme = this.advance().lexeme;
+		const token = this.advance();
+		const lexeme = token.lexeme;
 		return {
 			type: "Arithmetic",
 			left: lexeme[0],
@@ -131,7 +136,8 @@ export class Parser {
 	}
 
 	private stackOperation(): Statement {
-		const lexeme = this.advance().lexeme;
+		const token = this.advance();
+		const lexeme = token.lexeme;
 		switch (lexeme) {
 			case "!":
 				return {
@@ -154,7 +160,7 @@ export class Parser {
 					operation: "Drop",
 				};
 			default:
-				throw this.error(`Unknown stack operation '${lexeme}'`);
+				throw this.error(`Unknown stack operation '${lexeme}'`, token);
 		}
 	}
 
@@ -218,27 +224,31 @@ export class Parser {
 	}
 
 	private peek = (): Token => this.tokens[this.current];
+	private previous = (): Token => this.tokens[this.current - 1];
 	private advance = (): Token => this.tokens[this.current++];
 	private isEnd = (): boolean => this.peek().kind === TokenKind.EOF;
 	private check = (kind: TokenKind): boolean =>
 		!this.isEnd() && this.peek().kind === kind;
-	private error(message: string): Error {
-		const token = this.peek();
+	private error(message: string, token?: Token): NyxiumError {
+		const target =
+			token ?? (this.current > 0 ? this.previous() : this.peek());
+
 		return new NyxiumError({
 			kind: "parser",
 			message,
-			line: token.line,
-			column: token.column,
+			line: target.line,
+			column: target.column,
 			source: this.source,
+			length: Math.max(1, target.lexeme.length),
 		});
 	}
-    private consume(kind: TokenKind): Token {
-        if (!this.check(kind)) throw this.error(`Expected ${kind}`);
-        return this.advance();
-    }
-    private match(kind: TokenKind): boolean {
-        if (!this.check(kind)) return false;
-        this.advance();
-        return true;
-    }
+	private consume(kind: TokenKind): Token {
+		if (!this.check(kind)) throw this.error(`Expected ${kind}`);
+		return this.advance();
+	}
+	private match(kind: TokenKind): boolean {
+		if (!this.check(kind)) return false;
+		this.advance();
+		return true;
+	}
 }
