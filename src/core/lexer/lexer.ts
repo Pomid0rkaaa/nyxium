@@ -1,3 +1,4 @@
+import { NyxiumError } from "../../code/errors.js";
 import { Token } from "./token.js";
 import { TokenKind } from "./tokenKind.js";
 
@@ -90,7 +91,12 @@ export class Lexer {
 					break;
 
 				default:
-					throw this.error(`unknown character '${ch}'`);
+					throw this.errorAt(
+						`unknown character '${ch}'`,
+						startLine,
+						startColumn,
+						this.scanInvalidLength(),
+					);
 			}
 		}
 		this.flushPending(tokens);
@@ -106,7 +112,6 @@ export class Lexer {
 
 	private scanVariable(line: number, column: number): Token {
 		const start = this.current;
-
 		const variable = this.advance();
 
 		// x{ or xy{
@@ -115,6 +120,15 @@ export class Lexer {
 
 			if (this.isVariable(this.peek())) {
 				registers += this.advance();
+			}
+
+			if (this.isVariable(this.peek())) {
+				throw this.errorAt(
+					"invalid variable sequence",
+					line,
+					column,
+					this.current - start + 1,
+				);
 			}
 
 			if (this.peek() === "{") {
@@ -146,7 +160,12 @@ export class Lexer {
 				};
 			}
 
-			throw this.error("invalid variable sequence");
+			throw this.errorAt(
+				"invalid variable sequence",
+				line,
+				column,
+				this.current - start,
+			);
 		}
 
 		// x=y(...), x>y(...), x<y(...), x^y(...)
@@ -247,7 +266,45 @@ export class Lexer {
 		return ch;
 	}
 	private error = (message: string): Error =>
-		new Error(`Lexer error at ${this.line}:${this.column}: ${message}`);
+		this.errorAt(message, this.line, this.column, 1);
+	private errorAt = (
+		message: string,
+		line: number,
+		column: number,
+		length: number,
+	): Error =>
+		new NyxiumError({
+			kind: "lexer",
+			message,
+			line,
+			column,
+			source: this.source,
+			length,
+		});
+	private scanInvalidLength(): number {
+		const start = this.current;
+		while (!this.isEnd()) {
+			const ch = this.peek();
+			if (
+				this.isWhitespace(ch) ||
+				ch === "#" ||
+				ch === "{" ||
+				ch === "}" ||
+				ch === "(" ||
+				ch === ")" ||
+				ch === "|" ||
+				ch === "!" ||
+				ch === "~" ||
+				ch === "_" ||
+				ch === "[" ||
+				ch === "]"
+			) {
+				break;
+			}
+			this.advance();
+		}
+		return this.current - start;
+	}
 	private isVariableOperation = (ch: string): boolean =>
 		".:?&!^$".includes(ch);
 	private isWhitespace = (ch: string): boolean =>

@@ -1,3 +1,5 @@
+import { NyxiumError } from "../../code/errors.js";
+
 export type Value = number;
 
 export class Environment {
@@ -16,7 +18,10 @@ export class Environment {
 	get(name: string): number {
 		const value = this.values.get(name);
 		if (typeof value !== "number")
-			throw new Error(`'${name}' is not a number`);
+			throw new NyxiumError({
+				kind: "runtime",
+				message: `'${name}' is not a number`,
+			});
 		return value;
 	}
 

@@ -1,3 +1,4 @@
+import { NyxiumError } from "../../code/errors.js";
 import { Token } from "../lexer/token.js";
 import { TokenKind } from "../lexer/tokenKind.js";
 import { Program } from "../ast/program.js";
@@ -6,7 +7,10 @@ import { Statement } from "../ast/statements.js";
 export class Parser {
 	private current = 0;
 
-	constructor(private tokens: Token[]) {}
+	constructor(
+		private tokens: Token[],
+		private source = "",
+	) {}
 
 	parse(): Program {
 		const statements: Statement[] = [];
@@ -219,8 +223,14 @@ export class Parser {
 	private check = (kind: TokenKind): boolean =>
 		!this.isEnd() && this.peek().kind === kind;
 	private error(message: string): Error {
-        const token = this.peek();
-		return new Error(`${message} at ${token.line}:${token.column}`);
+		const token = this.peek();
+		return new NyxiumError({
+			kind: "parser",
+			message,
+			line: token.line,
+			column: token.column,
+			source: this.source,
+		});
 	}
     private consume(kind: TokenKind): Token {
         if (!this.check(kind)) throw this.error(`Expected ${kind}`);
