@@ -283,7 +283,7 @@ is equivalent to providing:
 Syntax:
 
 ```
-x^
+x'
 ```
 
 Replaces the value of `x` with its negative.
@@ -292,7 +292,7 @@ Example:
 
 ```nyx
 x++++
-x^
+x'
 x.
 ```
 
@@ -665,7 +665,7 @@ The default behavior checks whether the register is not equal to zero.
 | `=` | Equal |
 | `>` | Greater than |
 | `<` | Less than |
-| `^` | Not equal |
+| `'` | Not equal |
 
 ### Comparing registers
 
@@ -866,7 +866,7 @@ operation    ::= "+"+
                | "?"
                | "!"
                | "&"
-               | "^"
+               | "'"
                | "$"
 
 arithmetic   ::= register register "[" operator action "]"
@@ -1034,7 +1034,7 @@ The program creates a random number and compares it against user input.
 | `x?` | Push register |
 | `x!` | Pop into register |
 | `x&` | Read input |
-| `x^` | Negate register |
+| `x'` | Negate register |
 | `x$` | Random value |
 | `xy[+.]` | Arithmetic output |
 | `xy[+!]` | Store arithmetic result |
