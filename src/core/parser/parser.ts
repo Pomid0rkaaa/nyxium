@@ -86,7 +86,7 @@ export class Parser {
 					operation: "Input",
 					register,
 				};
-			case "^":
+			case "'":
 				return {
 					type: "Variable",
 					operation: "Negate",

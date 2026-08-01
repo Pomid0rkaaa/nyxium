@@ -306,7 +306,7 @@ export class Lexer {
 		return this.current - start;
 	}
 	private isVariableOperation = (ch: string): boolean =>
-		".:?&!^$".includes(ch);
+		".:?&!'$".includes(ch);
 	private isWhitespace = (ch: string): boolean =>
 		ch === " " || ch === "\n" || ch === "\r" || ch === "\t";
 	private isVariable = (ch: string): boolean => this.variables.has(ch);
