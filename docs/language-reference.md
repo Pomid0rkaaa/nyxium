@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Nyxium is a tiny stack- and register-based esoteric programming language implemented in TypeScript.
+Nyxium is a small stack- and register-based esoteric programming language implemented in TypeScript.
 
 A Nyxium program is a sequence of instructions operating on six registers and a shared stack. The language focuses on compact syntax while providing arithmetic, control flow, input/output, and memory manipulation.
 
@@ -24,7 +24,7 @@ This document describes the syntax and behavior of the Nyxium language.
 
 Nyxium has six built-in registers:
 
-```
+```text
 x y z a b c
 ```
 
@@ -32,7 +32,7 @@ Registers store signed integer values.
 
 All registers start with the value:
 
-```
+```text
 0
 ```
 
@@ -62,6 +62,17 @@ x&x.
 ```
 
 Instructions can only be combined when their syntax remains unambiguous.
+
+```text
+Valid:
+x+x.
+
+Valid:
+x++++y.
+
+Invalid:
+xyz
+```
 
 ### Comments
 
@@ -100,7 +111,7 @@ Supported statement types:
 
 Register operations use the following form:
 
-```
+```text
 <register><operation>
 ```
 
@@ -115,7 +126,7 @@ y&
 ### Increment and Decrement
 
 | Syntax | Description |
-|---|---|
+| --- | --- |
 | `x+` | Increase `x` by 1 |
 | `x++++` | Increase `x` by 4 |
 | `x-` | Decrease `x` by 1 |
@@ -132,7 +143,7 @@ x.
 
 Output:
 
-```
+```text
 5 
 ```
 
@@ -142,7 +153,7 @@ Output:
 
 Syntax:
 
-```
+```text
 x.
 ```
 
@@ -157,7 +168,7 @@ x.
 
 Output:
 
-```
+```text
 5 
 ```
 
@@ -165,7 +176,7 @@ Output:
 
 Syntax:
 
-```
+```text
 x:
 ```
 
@@ -180,7 +191,7 @@ x:
 
 Outputs:
 
-```
+```text
 
 ```
 
@@ -192,7 +203,7 @@ Outputs:
 
 Syntax:
 
-```
+```text
 x?
 ```
 
@@ -209,7 +220,7 @@ x?
 
 Syntax:
 
-```
+```text
 x!
 ```
 
@@ -221,7 +232,7 @@ If the stack is empty, the value `0` is used.
 
 Syntax:
 
-```
+```text
 x&
 ```
 
@@ -233,7 +244,7 @@ Example:
 
 Input:
 
-```
+```text
 42;10
 ```
 
@@ -246,7 +257,7 @@ x.
 
 Output:
 
-```
+```text
 42 
 ```
 
@@ -260,7 +271,7 @@ Input values ending in `:` are interpreted as characters.
 
 Example:
 
-```
+```text
 A:
 ```
 
@@ -268,13 +279,13 @@ is converted into the character code of `A`.
 
 Example input:
 
-```
+```text
 A:;B:
 ```
 
 is equivalent to providing:
 
-```
+```text
 65;66
 ```
 
@@ -282,7 +293,7 @@ is equivalent to providing:
 
 Syntax:
 
-```
+```text
 x'
 ```
 
@@ -298,7 +309,7 @@ x.
 
 Output:
 
-```
+```text
 -4 
 ```
 
@@ -306,7 +317,7 @@ Output:
 
 Syntax:
 
-```
+```text
 x$
 ```
 
@@ -314,7 +325,7 @@ Replaces `x` with a random integer.
 
 For non-negative values:
 
-```
+```text
 0 <= result <= x
 ```
 
@@ -327,7 +338,7 @@ x$
 
 produces:
 
-```
+```text
 0, 1, 2, or 3
 ```
 
@@ -339,7 +350,7 @@ Arithmetic operations combine two registers.
 
 Syntax:
 
-```
+```text
 <left><right>[<operator><action>]
 ```
 
@@ -353,7 +364,7 @@ xy[+.]
 
 This prints:
 
-```
+```text
 6 
 ```
 
@@ -362,7 +373,7 @@ This prints:
 Supported arithmetic operators:
 
 | Operator | Meaning |
-|---|---|
+| --- | --- |
 | `+` | Addition |
 | `-` | Subtraction |
 | `*` | Multiplication |
@@ -373,7 +384,7 @@ Supported arithmetic operators:
 The final symbol determines what happens with the result.
 
 | Action | Meaning |
-|---|---|
+| --- | --- |
 | `.` | Print result as number |
 | `:` | Print result as character |
 | `!` | Store result in left register |
@@ -400,7 +411,7 @@ xy[+!]
 
 Stores:
 
-```
+```text
 x = x + y
 ```
 
@@ -418,13 +429,13 @@ Division uses integer floor division.
 
 Example:
 
-```
+```text
 5 / 2 = 2
 ```
 
 Division by zero produces:
 
-```
+```text
 0
 ```
 
@@ -456,7 +467,7 @@ x?
 
 Output:
 
-```
+```text
 5 
 ```
 
@@ -575,7 +586,7 @@ Execution:
 
 Output:
 
-```
+```text
 5 4 3 2 1 
 ```
 
@@ -591,7 +602,7 @@ xy{
 
 The loop continues while:
 
-```
+```text
 x != 0 OR y != 0
 ```
 
@@ -616,7 +627,7 @@ x{
 
 To prevent infinite execution, loops have a maximum of:
 
-```
+```text
 10000 iterations
 ```
 
@@ -653,11 +664,11 @@ The body executes when the register value is not zero.
 ### Comparison operators
 
 | Operator | Meaning |
-|---|---|
+| --- | --- |
 | `=` | Equal |
 | `>` | Greater than |
 | `<` | Less than |
-| `'` | Not equal |
+| `^` | Not equal |
 
 ### Comparing registers
 
@@ -671,7 +682,7 @@ x=y(
 
 The branch executes when:
 
-```
+```text
 x == y
 ```
 
@@ -721,7 +732,7 @@ x&
 
 Input format:
 
-```
+```text
 value;value;value
 ```
 
@@ -732,23 +743,23 @@ Supported values:
 
 Examples:
 
-```
+```text
 42
 ```
 
-```
+```text
 A:
 ```
 
 Missing input:
 
-```
+```text
 0
 ```
 
 Invalid numeric input:
 
-```
+```text
 0
 ```
 
@@ -762,7 +773,7 @@ x.
 
 Prints:
 
-```
+```text
 value + space
 ```
 
@@ -793,7 +804,7 @@ Operations that remove or rearrange missing values do nothing:
 
 Division by zero always produces:
 
-```
+```text
 0
 ```
 
@@ -817,7 +828,7 @@ x$
 
 produces a random integer from:
 
-```
+```text
 0..x
 ```
 
@@ -825,61 +836,8 @@ for positive values.
 
 Negative values produce:
 
-```
+```text
 0
-```
-
-## Grammar
-
-The following simplified grammar describes Nyxium syntax.
-
-```ebnf
-program      ::= statement*
-
-statement    ::= variable
-               | arithmetic
-               | stack
-               | loop
-               | condition
-
-variable     ::= register operation
-
-register     ::= "x"
-               | "y"
-               | "z"
-               | "a"
-               | "b"
-               | "c"
-
-operation    ::= "+"+
-               | "-" +
-               | "."
-               | ":"
-               | "?"
-               | "!"
-               | "&"
-               | "'"
-               | "$"
-
-arithmetic   ::= register register "[" operator action "]"
-
-operator     ::= "+"
-               | "-"
-               | "*"
-               | "/"
-
-action       ::= "."
-               | ":"
-               | "!"
-               | "?"
-
-loop         ::= register register? "{" statement* "}"
-
-condition    ::= register
-                 comparison?
-                 "(" statement* ("|" statement*)? ")"
-
-comparison   ::= ("=" | ">" | "<" | "^") register
 ```
 
 ## Common Idioms
@@ -930,7 +888,7 @@ xy[+!]
 
 means:
 
-```
+```text
 x = x + y
 ```
 
@@ -1011,7 +969,7 @@ Demonstrates:
 ## Complete Syntax Summary
 
 | Syntax | Meaning |
-|---|---|
+| --- | --- |
 | `x+` | Increment register |
 | `x-` | Decrement register |
 | `x.` | Print number |
@@ -1029,6 +987,5 @@ Demonstrates:
 | `!` | Pop and print |
 | `!:` | Pop and print character |
 | `~` | Swap stack |
-
 | `_` | Drop stack value |
 | `#` | Comment |

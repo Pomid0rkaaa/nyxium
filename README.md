@@ -5,7 +5,7 @@
 <h1 align="center">Nyxium</h1>
 
 <p align="center">
-  A small interpreted register-and-stack based esoteric programming language implemented in TypeScript.
+  A small stack- and register-based esoteric programming language implemented in TypeScript.
 </p>
 
 <p align="center">
