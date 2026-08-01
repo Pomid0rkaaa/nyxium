@@ -5,8 +5,43 @@
 <h1 align="center">Nyxium</h1>
 
 <p align="center">
-  A small interpreted register-based esoteric programming language implemented in TypeScript.
+  A small interpreted register-and-stack esoteric programming language implemented in TypeScript.
 </p>
+
+<p align="center">
+  <a href="docs/language-reference.md">Language Reference</a>
+  •
+  <a href="examples/">Examples</a>
+</p>
+
+## Overview
+
+Nyxium is a small symbolic programming language built around a simple execution model:
+
+- six built-in registers (`x y z a b c`)
+- a shared stack
+- integer arithmetic
+- structured loops and conditions
+- character and numeric input/output
+
+The goal of Nyxium is to stay minimal and compact while still being capable of writing complete programs.
+
+## Example
+
+```nyx
+x+++++
+
+x{
+    x.
+    x-
+}
+```
+
+Output:
+
+```text
+5 4 3 2 1
+```
 
 ## Installation
 
@@ -89,20 +124,15 @@ For the complete syntax and semantics, see the [language reference](docs/languag
 
 ## Examples
 
-The `examples/` directory contains several sample programs:
+The [`examples/`](examples/) directory contains complete, commented Nyxium programs.
 
-- `adder.nyx`
-- `alphabet.nyx`
-- `compare.nyx`
-- `factorial.nyx`
-- `guess_number.nyx`
-- `if_number.nyx`
-
-For example:
+Run any example with:
 
 ```bash
 nyx examples/factorial.nyx
 ```
+
+See the [Language Reference](docs/language-reference.md) for an overview of the language and selected examples.
 
 ## Development
 
@@ -125,7 +155,11 @@ npm run clean       # Remove the dist/ directory
 Additional build targets:
 
 ```bash
-npm run build:single
-npm run build:dev
-npm run build:web
+npm run build:single   # Create a standalone single-file interpreter
+npm run build:dev      # Compile TypeScript output
+npm run build:web      # Create browser playground in dist/web
 ```
+
+## License
+
+Nyxium is released under the MIT License.
