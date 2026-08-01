@@ -4,28 +4,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nyxium Interpreter</title>
+  <title>Nyxium Playground</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-  <h1>Nyxium Interpreter</h1>
-  <textarea id="code" placeholder="Type Nyxium code..."></textarea>
-  <input id="input" type="text" placeholder="Program input" />
-  <button id="run">Run</button>
-  <pre id="output"></pre>
+  <main class="container">
+    <header>
+      <h1>Nyxium Playground</h1>
+      <p>
+        Experiment with the Nyxium programming language directly in your browser.
+        No installation required.
+      </p>
+    </header>
+
+    <div class="toolbar">
+      <select id="examples">
+        <option value="">Examples…</option>
+        <option value="echo">Echo</option>
+        <option value="adder">Adder</option>
+        <option value="countdown">Countdown</option>
+      </select>
+
+      <button id="share">Copy Link</button>
+      <button id="run">Run ▶</button>
+    </div>
+
+    <label for="code">Program</label>
+    <textarea id="code" spellcheck="false" placeholder="Type Nyxium code..."></textarea>
+
+    <label for="input">Input</label>
+    <input id="input" type="text" placeholder="Example: 42;10" />
+
+    <label for="output">Output</label>
+
+    <div class="output-toolbar">
+      <button id="copy-output">Copy Output</button>
+    </div>
+
+    <pre id="output"></pre>
+
+    <footer>
+      <div class="links">
+        <a href="https://github.com/Pomid0rkaaa/nyxium/blob/main/docs/language-reference.md" target="_blank">
+          Language Reference
+        </a>
+
+        <a href="https://github.com/Pomid0rkaaa/nyxium" target="_blank">
+          GitHub
+        </a>
+      </div>
+
+      <div class="status">
+        Nyxium v1.0.0 • TypeScript interpreter
+      </div>
+    </footer>
+  </main>
+
   <script src="./nyxium.min.js"></script>
+
   <script>
     const code = document.getElementById("code");
     const input = document.getElementById("input");
     const output = document.getElementById("output");
     const run = document.getElementById("run");
-    run.addEventListener("click", () => {
+    const examples = document.getElementById("examples");
+    const share = document.getElementById("share");
+    const copyOutput = document.getElementById("copy-output");
+
+    const params = new URLSearchParams(location.search);
+
+    if (params.has("code")) {
+      code.value = decodeURIComponent(atob(params.get("code")));
+    }
+
+    const programs = {
+      echo: `x&
+x:`,
+
+      adder: `x&
+y&
+xy[+.]`,
+
+      countdown: `x+++++
+
+x{
+	x.
+	x-
+}`
+    };
+
+    examples.addEventListener("change", () => {
+      if (examples.value)
+        code.value = programs[examples.value];
+    });
+
+    function execute() {
       try {
         output.textContent = interpret(code.value, input.value);
       } catch (err) {
         output.textContent = err.message;
       }
+    }
+
+    run.addEventListener("click", execute);
+    share.addEventListener("click", async () => {
+      const url = new URL(location.href);
+
+      if (code.value.trim()) {
+        url.searchParams.set(
+          "code",
+          btoa(encodeURIComponent(code.value))
+        );
+      } else {
+        url.searchParams.delete("code");
+      }
+
+      await navigator.clipboard.writeText(url.toString());
+
+      share.textContent = "Copied!";
+      setTimeout(() => share.textContent = "Copy Link", 1500);
+    });
+
+    copyOutput.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(output.textContent);
+
+      copyOutput.textContent = "Copied!";
+      setTimeout(() => copyOutput.textContent = "Copy Output", 1500);
+    });
+
+    code.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key === "Enter")
+        execute();
     });
   </script>
 </body>

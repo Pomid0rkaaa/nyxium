@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <strong><a href="https://pomid0rkaaa.github.io/nyxium/">Try Nyxium Online</a></strong>
+</p>
+
+<p align="center">
   <a href="docs/language-reference.md">Language Reference</a>
   •
   <a href="docs/cli.md">CLI Guide</a>
