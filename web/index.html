@@ -11,21 +11,22 @@
 <body>
   <h1>Nyxium Interpreter</h1>
   <textarea id="code" placeholder="Type Nyxium code..."></textarea>
-  <input id="stdin" type="text" placeholder="Program input (stdin)" />
+  <input id="input" type="text" placeholder="Program input" />
   <button id="run">Run</button>
   <pre id="output"></pre>
   <script src="./nyxium.min.js"></script>
   <script>
     const code = document.getElementById("code");
-    const stdin = document.getElementById("stdin");
+    const input = document.getElementById("input");
     const output = document.getElementById("output");
-    document.getElementById("run").onclick = () => {
+    const run = document.getElementById("run");
+    run.addEventListener("click", () => {
       try {
-        output.textContent = interpret(code.value, stdin.value);
+        output.textContent = interpret(code.value, input.value);
       } catch (err) {
         output.textContent = err.message;
       }
-    };
+    });
   </script>
 </body>
 
