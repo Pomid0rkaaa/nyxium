@@ -936,84 +936,77 @@ x = x + y
 
 ## Example Programs
 
-The `examples/` directory contains complete commented Nyxium programs.
+The [`examples/`](../examples/) directory contains complete, commented Nyxium programs ranging
+from simple demonstrations to larger examples. The following programs are good
+starting points:
 
-### adder.nyx
+### [echo.nyx](../examples/echo.nyx)
+
+Reads a character and immediately prints it back.
 
 Demonstrates:
 
-- input
-- arithmetic
-- output
+- character input
+- character output
 
-```nyx
-x& y&
-xy[+.]
-```
+### [adder.nyx](../examples/adder.nyx)
 
 Reads two numbers and prints their sum.
 
-### if_number.nyx
+Demonstrates:
+
+- numeric input
+- arithmetic
+- numeric output
+
+### [copy_register.nyx](../examples/copy_register.nyx)
+
+Copies one register to another using the stack.
 
 Demonstrates:
 
-- conditions
-- default register values
+- stack operations
+- register transfer idioms
 
-```nyx
-a&
-x+++++
+### [alphabet.nyx](../examples/alphabet.nyx)
 
-x=a(
-    z+
-)
-
-z.
-```
-
-Outputs `1` if the input is `5`.
-
-### compare.nyx
-
-Demonstrates:
-
-- register comparison
-- else branches
-- character output
-- stack usage
-
-The program outputs different characters depending on whether two values match.
-
-### alphabet.nyx
+Constructs the ASCII value of `A` and prints the uppercase alphabet.
 
 Demonstrates:
 
 - arithmetic
 - loops
-- character generation
+- character output
 
-The program creates and prints the alphabet by incrementing character codes.
+### [factorial.nyx](../examples/factorial.nyx)
 
-### factorial.nyx
+Calculates the factorial of an input value.
 
 Demonstrates:
 
 - loops
 - multiplication
-- stack copying
+- accumulator variables
 
-The program calculates the factorial of an input number.
+### [max.nyx](../examples/max.nyx)
 
-### guess_number.nyx
+Prints the larger of two input values.
 
 Demonstrates:
 
-- random numbers
-- stack operations
-- conditionals
-- branching
+- comparisons
+- conditional branching
 
-The program creates a random number and compares it against user input.
+### [guess_number.nyx](../examples/guess_number.nyx)
+
+A small guessing game using random numbers.
+
+Demonstrates:
+
+- random number generation
+- stack manipulation
+- conditional branching
+- character output
 
 ## Complete Syntax Summary
 
