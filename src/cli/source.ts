@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import { printHelp } from "./help.js";
 import { parseArgs } from "./args.js";
+import { repl } from "./repl.js";
 
 export interface SourceInput {
 	source: string;
@@ -14,6 +15,11 @@ export async function resolveSource(
 
 	if (parsed.help) {
 		printHelp();
+		return null;
+	}
+
+	if (parsed.repl) {
+		await repl();
 		return null;
 	}
 

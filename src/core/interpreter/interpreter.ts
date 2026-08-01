@@ -4,6 +4,12 @@ import { Program } from "../ast/program.js";
 import * as ST from "../ast/statements.js";
 import { Environment } from "./environment.js";
 
+export interface InterpreterStatus {
+	registers: Record<string, number>;
+	stack: readonly number[];
+	input: readonly number[];
+}
+
 export class Interpreter {
 	private env = new Environment();
 	private memory: number[] = [];
@@ -26,7 +32,7 @@ export class Interpreter {
 
 	input(input: string) {
 		this.inputValues.push(...this.parseInput(input));
-        return this;
+		return this;
 	}
 
 	reset() {
@@ -35,15 +41,26 @@ export class Interpreter {
 		this.output = "";
 		this.inputValues = [];
 		this.inputIndex = 0;
-        return this;
+		return this;
 	}
 
-	status() {
+	status(): InterpreterStatus {
 		return {
 			registers: this.env.dump(),
 			stack: [...this.memory],
 			input: this.inputValues.slice(this.inputIndex),
 		};
+	}
+
+	dump(): string {
+		const { registers, stack, input } = this.status();
+		return [
+			`Registers: ${Object.entries(registers)
+				.map(([k, v]) => `${k}=${v}`)
+				.join(" ")}`,
+			`Stack: ${stack.length ? `[${stack.join(", ")}]` : "<empty>"}`,
+			`Input: ${input.length ? `[${input.join(", ")}]` : "<empty>"}`,
+		].join("\n");
 	}
 
 	private parseInput(input: string): number[] {
