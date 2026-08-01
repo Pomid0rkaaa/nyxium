@@ -648,15 +648,7 @@ x(
 )
 ```
 
-This is equivalent to:
-
-```nyx
-x^0(
-    x.
-)
-```
-
-The default behavior checks whether the register is not equal to zero.
+The body executes when the register value is not zero.
 
 ### Comparison operators
 
