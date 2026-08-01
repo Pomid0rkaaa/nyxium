@@ -7,6 +7,7 @@ Options:
   -c, --code  <code>    Execute inline code
   -i, --input <string>  Program input (;-separated, e.g. 3;A:;42)
   -h, --help            Show this help message
+  -r, --repl            Start interactive REPL
 
 Examples:
   nyx script.nyx
