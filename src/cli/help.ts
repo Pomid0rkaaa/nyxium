@@ -1,7 +1,7 @@
 export function printHelp(): void {
 	console.log(`
 Usage:
-  nyxium [options] [file]
+  nyx [options] [file]
 
 Options:
   -c, --code  <code>    Execute inline code
@@ -9,9 +9,9 @@ Options:
   -h, --help            Show this help message
 
 Examples:
-  nyxium script.nyx
-  nyxium -c "x."
-  nyxium -i "3;5" -c "x& x. y& y."
-  echo '42' | nyxium script.nyx
+  nyx script.nyx
+  nyx -c "x."
+  nyx -i "3;5" -c "x& x. y& y."
+  echo '42' | nyx script.nyx
 `);
 }

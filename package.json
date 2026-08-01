@@ -5,15 +5,15 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "nyxium": "./dist/index.js"
+    "nyx": "./dist/nyxium.min.mjs"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist",
+    "build": "node ./scripts/build-single.mjs --minify",
     "build:single": "node ./scripts/build-single.mjs",
-    "build:min": "node ./scripts/build-single.mjs --minify",
+    "build:dev": "tsc",
     "build:web": "node ./scripts/build-web.mjs --minify",
     "start": "node dist/index.js",
     "test": "node --import tsx --test tests/**/*.test.ts"

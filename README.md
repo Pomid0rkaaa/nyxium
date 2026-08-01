@@ -33,16 +33,16 @@ npm link
 You can now run Nyxium from anywhere:
 
 ```bash
-nyxium --help
+nyx --help
 ```
 
-> **Note:** Nyxium is not published to npm. If you don't want to use `npm link`, you can run the interpreter directly with `node dist/index.js`.
+> **Note:** Nyxium is not published to npm. If you don't want to use `npm link`, you can run the interpreter directly with `node dist/nyxium.min.mjs`.
 
 ## Usage
 
 ```text
 Usage:
-  nyxium [options] [file]
+  nyx [options] [file]
 
 Options:
   -c, --code  <code>    Execute inline code
@@ -53,25 +53,25 @@ Options:
 Run a source file:
 
 ```bash
-nyxium examples/alphabet.nyx
+nyx examples/alphabet.nyx
 ```
 
 Execute inline code:
 
 ```bash
-nyxium -c "x."
+nyx -c "x."
 ```
 
 Provide input via the command line:
 
 ```bash
-nyxium -i "3;5" -c "x& x. y& y."
+nyx -i "3;5" -c "x& x. y& y."
 ```
 
 Or pipe input through standard input (overrides `-i`):
 
 ```bash
-echo "42" | nyxium examples/adder.nyx
+echo "42" | nyx examples/adder.nyx
 ```
 
 ## Language Overview
@@ -101,7 +101,7 @@ The `examples/` directory contains several sample programs:
 For example:
 
 ```bash
-nyxium examples/factorial.nyx
+nyx examples/factorial.nyx
 ```
 
 ## Development
@@ -126,6 +126,6 @@ Additional build targets:
 
 ```bash
 npm run build:single
-npm run build:min
+npm run build:dev
 npm run build:web
 ```
