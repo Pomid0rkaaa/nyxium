@@ -1,6 +1,4 @@
 import { formatNyxiumError } from "../code/errors.js";
-import { Lexer } from "../core/lexer/lexer.js";
-import { Parser } from "../core/parser/parser.js";
 import { Interpreter } from "../core/interpreter/interpreter.js";
 import { resolveSource } from "./source.js";
 
@@ -9,13 +7,8 @@ export async function run(argv: string[]): Promise<void> {
 		const args = argv.slice(2);
 		const resolved = await resolveSource(args);
 		if (!resolved) return;
-		const { source, stdin } = resolved;
-		const lexer = new Lexer(source);
-		const tokens = lexer.scan();
-		const parser = new Parser(tokens, source);
-		const program = parser.parse();
-		const interpreter = new Interpreter();
-		const output = interpreter.interpret(program, stdin);
+		const { source, input } = resolved;
+		const output = new Interpreter().input(input).exec(source);
 		if (output !== "") console.log(output);
 	} catch (error) {
 		console.error(formatNyxiumError(error));

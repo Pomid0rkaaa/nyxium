@@ -4,7 +4,7 @@ import { parseArgs } from "./args.js";
 
 export interface SourceInput {
 	source: string;
-	stdin: string;
+	input: string;
 }
 
 export async function resolveSource(
@@ -30,13 +30,13 @@ export async function resolveSource(
 		return null;
 	}
 
-	const stdin = process.stdin.isTTY
+	const input = process.stdin.isTTY
 		? (parsed.input ?? "")
 		: await readStdin();
 
 	return {
 		source,
-		stdin,
+		input,
 	};
 }
 

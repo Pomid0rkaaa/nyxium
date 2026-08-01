@@ -1,3 +1,5 @@
+import { Lexer } from "../lexer/lexer.js";
+import { Parser } from "../parser/parser.js";
 import { Program } from "../ast/program.js";
 import * as ST from "../ast/statements.js";
 import { Environment } from "./environment.js";
@@ -6,27 +8,47 @@ export class Interpreter {
 	private env = new Environment();
 	private memory: number[] = [];
 	private output = "";
-	private stdinValues: number[] = [];
-	private stdinIndex = 0;
+	private inputValues: number[] = [];
+	private inputIndex = 0;
 
-	interpret(program: Program, stdin = ""): string {
-		this.reset();
-		this.stdinValues = this.parseStdin(stdin);
-		this.execute(program.statements);
-		return this.output;
+	exec(source: string) {
+		const lexer = new Lexer(source);
+		const parser = new Parser(lexer.scan(), source);
+		return this.interpret(parser.parse());
 	}
 
-	private reset() {
+	interpret(program: Program): string {
+		this.execute(program.statements);
+		const out = this.output;
+		this.output = "";
+		return out;
+	}
+
+	input(input: string) {
+		this.inputValues.push(...this.parseInput(input));
+        return this;
+	}
+
+	reset() {
 		this.env.reset();
 		this.memory = [];
 		this.output = "";
-		this.stdinValues = [];
-		this.stdinIndex = 0;
+		this.inputValues = [];
+		this.inputIndex = 0;
+        return this;
 	}
 
-	private parseStdin(stdin: string): number[] {
-		if (!stdin) return [];
-		return stdin.split(";").map((value) => {
+	status() {
+		return {
+			registers: this.env.dump(),
+			stack: [...this.memory],
+			input: this.inputValues.slice(this.inputIndex),
+		};
+	}
+
+	private parseInput(input: string): number[] {
+		if (!input) return [];
+		return input.split(";").map((value) => {
 			const s = value.trim();
 			if (s.endsWith(":") && s.length > 1) return s.charCodeAt(0);
 			const n = Number(s);
@@ -82,8 +104,8 @@ export class Interpreter {
 			case "Input":
 				this.env.set(
 					statement.register,
-					this.stdinIndex < this.stdinValues.length
-						? this.stdinValues[this.stdinIndex++]
+					this.inputIndex < this.inputValues.length
+						? this.inputValues[this.inputIndex++]
 						: 0,
 				);
 				break;
