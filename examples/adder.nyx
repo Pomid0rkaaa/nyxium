@@ -1,2 +1,6 @@
-x& y&  # get input for x and y
-xy[+.]  # output x + y
+# Read two numbers.
+x&
+y&
+
+# Print their sum.
+xy[+.]

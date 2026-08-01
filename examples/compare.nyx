@@ -1,14 +1,17 @@
-x& y&  # get input for x and y
+# Read two numbers.
+x&
+y&
 
-a+++++++  # a = 7
-b++++++  # b = 6
-ab[*!]  # a * b = 42, push to mem
-a+  # a = 43
+# Compute the ASCII code for '+' (43).
+a+++++++
+b++++++
+ab[*!]
+a+
 
-# if x != y
-#   then a = -:
-#   else a = +:
-x^y( a++ )
+# If the numbers are different, increment to '-' (45).
+x^y(
+  a++
+)
 
-# output char code of a
+# Print '+' when equal, '-' otherwise.
 a:

@@ -1,28 +1,56 @@
+# Compute the ASCII value of 'A' (65).
 x+++++
 y+++
-xx[*!] xy[*!]
-# making word FAIL
-x+ x?  # x = L:, push to mem
-x--- x?  # x = I:, push to mem
-x--- x?  # x = F:, push to mem
-x----- x?  # x = A:, push to mem
-~  # swap A and F
+xx[*!]
+xy[*!]
 
-# WIN
-x+++++++++++++ x?  # x = N:, push to mem
-x----- x?  # x = I:, push to mem
-x++++++++++++++ x?  # x = W:, push to mem
+# Push "FAIL" onto the stack.
+x+
+x?
 
-# Random number between 1 and 3
-a++  # a = 2
-a$  # a = 0..2
-a+  # a = 1..3
+x---
+x?
 
-b&  # get input number
-# if input == random number
+x---
+x?
+
+x-----
+x?
+
+# Reorder the top values so the word prints correctly.
+~
+
+# Push "WIN" onto the stack.
+x+++++++++++++
+x?
+
+x-----
+x?
+
+x++++++++++++++
+x?
+
+# Generate a random number from 1 to 3.
+a++
+a$
+a+
+
+# Read the player's guess.
+b&
+
+# Print "WIN" or "FAIL".
 a=b(
-  !: !: !:  # WIN
-  |  # else
-  _ _ _  # skip WIN
-  !: !: !: !:  # FAIL
+  !:
+  !:
+  !:
+|
+  # Discard "WIN".
+  _
+  _
+  _
+
+  !:
+  !:
+  !:
+  !:
 )

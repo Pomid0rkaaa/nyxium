@@ -1,12 +1,14 @@
-x&  # get input for x
+# Read the input number.
+x&
 
-y+  # y = 1, default answer
+# The running result starts at 1.
+y+
 
-# do ... while x != 0
+# Multiply the result by every value down to 1.
 x{
-  yx[*!]  # y = y * x
-  y? z!  # copying value from y to z
-  x-  # decrementing x
+  yx[*!]
+  x-
 }
 
-z.  # output factorial of the input number
+# Print the factorial.
+y.

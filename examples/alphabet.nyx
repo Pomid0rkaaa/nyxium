@@ -1,18 +1,19 @@
-x++++++  # x = 6
-y++++++++++  # y = 10
-xy[*!]  # x = x * y = 60
-x+++++  # x = 65 or A:
+# Compute the ASCII value of 'A' (65).
+x++++++
+y++++++++++
+xy[*!]
+x+++++
 
-z+++++++++  # z = 9
-yz[*!]  # y = y * z = 90
+# Compute the number of letters (26).
+z+++++++++
+yz[*!]
+yx[-?]
+z!
+z+
 
-yx[-?]  # y - x = 90 - 65 = 25, push to mem
-
-z! z+  # z = 26
-
-# do ... while z != 0
+# Print A through Z.
 z{
-  x:  # output char code of x
-  x+  # x += 1 to get next char
-  z-  # decrement z
+  x:
+  x+
+  z-
 }

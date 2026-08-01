@@ -1,11 +1,13 @@
-a&  # get input for a
-x+++++  # x = 5
+# Read the input.
+a&
 
-# if a = 5
+# Compare against 5.
+x+++++
+
+# Set z to 1 when the input is 5.
 x=a(
-  # then
-  z+  # z += 1
-  # else we doing nothing, z = 0 by default
+  z+
 )
 
-z.  # output value of z
+# Otherwise z remains 0.
+z.

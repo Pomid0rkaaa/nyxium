@@ -1,0 +1,8 @@
+# Copy x into y using the stack.
+x&
+
+x?
+y!
+
+x.
+y.
