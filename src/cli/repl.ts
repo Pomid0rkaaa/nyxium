@@ -69,33 +69,60 @@ async function command(
 	const arg = rest.join(" ");
 
 	switch (cmd) {
+		case "h":
 		case "help":
 			console.log(`
 Commands:
-  :help           Show this help
-  :status         Show registers, stack and remaining input
-  :input <value>  Append input values
-  :reset          Reset interpreter state
-  :quit           Exit REPL
-  :exit           Exit REPL
+  :h, :help                  Show this help
+  :s, :status                Show registers, stack, and remaining input
+      :regs                  Show registers
+      :stack                 Show the stack
+  :i, :input [<values>]      Show remaining input, or append input values
+                               (e.g. 42;65;B:;C:)
+  :r, :reset                 Reset the interpreter state
+      :clear                 Clear the terminal
+  :q, :quit, :exit           Exit the REPL
 `);
 			break;
 
+		case "s":
 		case "status": {
-			console.log(interpreter.dump());
+			console.log(interpreter.dump().join("\n\n"));
+			break;
+		}
+		case "regs": {
+			const [regs] = interpreter.dump();
+			console.log(regs);
+			break;
+		}
+		case "stack": {
+			const [, stack] = interpreter.dump();
+			console.log(stack);
 			break;
 		}
 
+		case "i":
 		case "input":
-			interpreter.input(arg);
-			console.log("Input appended.");
+			if (arg !== "") {
+				interpreter.input(arg);
+				console.log("Input appended.");
+			} else {
+				const [, , input] = interpreter.dump();
+				console.log(input);
+			}
 			break;
 
+		case "r":
 		case "reset":
 			interpreter.reset();
 			console.log("Interpreter reset.");
 			break;
 
+		case "clear":
+			console.clear();
+			break;
+
+		case "q":
 		case "quit":
 		case "exit":
 			return false;

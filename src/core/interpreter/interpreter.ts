@@ -52,15 +52,15 @@ export class Interpreter {
 		};
 	}
 
-	dump(): string {
+	dump(): [registers: string, stack: string, input: string] {
 		const { registers, stack, input } = this.status();
 		return [
-			`Registers: ${Object.entries(registers)
-				.map(([k, v]) => `${k}=${v}`)
-				.join(" ")}`,
+			`Registers:\n${Object.entries(registers)
+				.map(([k, v]) => `  ${k} = ${v}`)
+				.join("\n")}`,
 			`Stack: ${stack.length ? `[${stack.join(", ")}]` : "<empty>"}`,
 			`Input: ${input.length ? `[${input.join(", ")}]` : "<empty>"}`,
-		].join("\n");
+		];
 	}
 
 	private parseInput(input: string): number[] {
