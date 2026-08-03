@@ -2,10 +2,10 @@
   <img src="docs/assets/nyxium-logo.png" width="128" alt="Nyxium logo">
 </p>
 
-<h1 align="center">Nyxium</h1>
+<h1 align="center">Nyxium Programming Language</h1>
 
 <p align="center">
-  A small stack- and register-based esoteric programming language implemented in TypeScript.
+  A small stack- and register-based esolang implemented in TypeScript.
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 
 ## Overview
 
-Nyxium is a compact symbolic programming language built around a simple execution model:
+Nyxium is a compact symbolic esoteric programming language built around a simple execution model:
 
 - six built-in registers (`x y z a b c`)
 - a shared stack
