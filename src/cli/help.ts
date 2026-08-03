@@ -1,5 +1,6 @@
 export function printHelp(): void {
-	console.log(`
+	console.log(`Nyxium Programming Language
+
 Usage:
   nyx [options] [file]
 
